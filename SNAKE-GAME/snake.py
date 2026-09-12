@@ -1,6 +1,7 @@
 from turtle import Turtle
 
 MOVE_DISTANCE = 20
+SNAKE_SQUARES_END_POINT = 1000
 
 class Snake:
     def __init__(self):
@@ -17,6 +18,13 @@ class Snake:
         for square in range(1, len(self.squares) - 1):
             prev_square = self.squares[square - 1]
             self.squares[square].goto(prev_square.xcor() - 20, prev_square.ycor())
+
+    def reset_snake(self):
+        for square in self.squares:
+            square.goto(SNAKE_SQUARES_END_POINT, SNAKE_SQUARES_END_POINT)
+        self.squares.clear()
+        self.create_snake()
+        self.head = self.squares[0]
 
     def move(self):
         for seg_num in range(len(self.squares) - 1, 0, -1):

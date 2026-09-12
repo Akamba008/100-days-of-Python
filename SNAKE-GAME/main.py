@@ -4,6 +4,7 @@ from snake import Snake
 from food import Food
 from scoreboard import Scoreboard
 
+
 screen = Screen()
 screen.setup(width = 600, height = 600)
 screen.bgcolor("black")
@@ -31,18 +32,21 @@ while game_running:
         food.refresh()
         screen.tracer(0)
         snake.increase_length()
-        scoreboard.increase_score()
+        scoreboard.score += 1
+        scoreboard.update_score()
 
     #Detect collision with body
     for snake_part in snake.squares[1:]:
         if snake.head.distance(snake_part) < 15:
-            game_running = False
-            scoreboard.game_over()
+            scoreboard.reset()
+            snake.reset_snake()
+            food.refresh()
 
     #Detect collision with wall
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
-        game_running = False
-        scoreboard.game_over()
+        scoreboard.reset()
+        snake.reset_snake()
+        food.refresh()
 
 
 
